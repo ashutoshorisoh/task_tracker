@@ -69,9 +69,9 @@ const App = () => {
       <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
         {/* Sidebar */}
         <div className="w-full md:w-64 bg-white p-4 border-r border-gray-200">
-          <div className="mb-6">
+          <div className="mb-1">
             <button 
-              className="w-full bg-indigo-600 text-white p-2 rounded-md flex items-center justify-center space-x-2 hover:bg-indigo-700"
+              className="w-full mb-2 bg-indigo-600 text-white p-2 rounded-md flex items-center justify-center space-x-2 hover:bg-indigo-700"
               onClick={() => {
                 setEditingTask(null);
                 setShowAddTask(true);
@@ -80,18 +80,19 @@ const App = () => {
               <Plus className="h-4 w-4" />
               <span>Add New Task</span>
             </button>
-          </div>
-          
-          {/* Mobile-only filters - shown only on mobile */}
-          <div className="md:hidden">
+
+            <div className="lg:block hidden">
             <TaskFilters />
           </div>
+          </div>
+          
+          {/* Mobile-only filters - shown only on mobile */}        
         </div>
         
         {/* Task Content */}
         <div className="flex-1 overflow-auto p-4">
           {/* Desktop filters - hidden on mobile */}
-          <div className="hidden md:block">
+          <div className="lg:hidden block">
             <TaskFilters />
           </div>
           
