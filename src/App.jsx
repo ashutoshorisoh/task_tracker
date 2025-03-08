@@ -58,9 +58,7 @@ const App = () => {
             >
               <BarChart2 className="h-5 w-5" />
             </button>
-            <button className="p-2 rounded hover:bg-indigo-700">
-              <Menu className="h-5 w-5" />
-            </button>
+            
           </div>
         </div>
       </header>
