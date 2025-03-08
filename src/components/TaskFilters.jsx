@@ -6,22 +6,26 @@ import { Calendar, Check, Star, Tag, Search, Filter } from 'lucide-react';
 const TaskFilters = () => {
   const dispatch = useDispatch();
   const { tasks, filter, searchQuery } = useSelector(state => state.tasks);
-  
+
   const handleFilterChange = (newFilter) => {
     dispatch(setFilter(newFilter));
   };
-  
+
   const handleSearchChange = (e) => {
     dispatch(setSearchQuery(e.target.value));
   };
-  
+
+  const handleCategoryFilter = (category) => {
+    dispatch(setFilter(category)); // Setting the filter to the category name
+  };
+
   const categoryCounts = tasks.reduce((acc, task) => {
     if (task.category) {
       acc[task.category] = (acc[task.category] || 0) + 1;
     }
     return acc;
   }, {});
-  
+
   return (
     <>
       {/* Search Bar */}
@@ -40,7 +44,7 @@ const TaskFilters = () => {
           <Filter className="h-4 w-4 text-gray-400" />
         </div>
       </div>
-      
+
       {/* Filter Buttons */}
       <div className="space-y-1 mb-4">
         <p className="text-xs uppercase text-gray-500 font-semibold mb-2">Filters</p>
@@ -71,7 +75,7 @@ const TaskFilters = () => {
           </button>
         </div>
       </div>
-      
+
       {/* Categories */}
       {Object.keys(categoryCounts).length > 0 && (
         <div className="mb-4">
@@ -80,11 +84,8 @@ const TaskFilters = () => {
             {Object.entries(categoryCounts).map(([category, count]) => (
               <button 
                 key={category}
-                className="px-3 py-1 bg-white rounded-md flex items-center space-x-1 hover:bg-gray-50"
-                onClick={() => {
-                  // You could add category filtering here
-                  // For now it's just display-only
-                }}
+                className={`px-3 py-1 rounded-md flex items-center space-x-1 ${filter === category ? 'bg-indigo-50 text-indigo-600' : 'bg-white hover:bg-gray-50'}`}
+                onClick={() => handleCategoryFilter(category)}
               >
                 <Tag className="h-4 w-4" />
                 <span>{category}</span>
