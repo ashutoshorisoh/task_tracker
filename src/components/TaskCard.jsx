@@ -6,7 +6,6 @@ import { Edit2, Trash2, Check } from 'lucide-react';
 function TaskCard({ task, onEdit }) {
   const dispatch = useDispatch();
   
-  // Get priority color for the badge
   const getPriorityColor = (priority) => {
     switch(priority?.toUpperCase()) {
       case 'HIGH':
@@ -20,18 +19,17 @@ function TaskCard({ task, onEdit }) {
     }
   };
   
-  // Handle task completion toggle
   const handleToggleStatus = () => {
     dispatch(toggleTaskStatus(task.id));
   };
   
-  // Handle delete task
   const handleDelete = () => {
     dispatch(deleteTask(task.id));
   };
 
   return (
     <div 
+      id={`task-${task.id}`}
       className={`bg-white p-4 rounded-lg shadow border-l-4 
         ${task.priority?.toUpperCase() === 'HIGH' ? 'border-red-500' : 
           task.priority?.toUpperCase() === 'MEDIUM' ? 'border-yellow-500' : 'border-green-500'} 
@@ -40,6 +38,7 @@ function TaskCard({ task, onEdit }) {
       <div className="flex items-start">
         <div className="flex-shrink-0 mt-0.5">
           <button 
+            id={`toggle-${task.id}`}
             onClick={handleToggleStatus}
             className={`h-5 w-5 rounded-full border flex items-center justify-center 
               ${task.completed ? 'bg-indigo-500 border-indigo-500' : 'border-gray-300'}`}
@@ -48,18 +47,21 @@ function TaskCard({ task, onEdit }) {
           </button>
         </div>
         <div className="ml-3 flex-1">
-          <p className={`text-sm font-medium ${task.completed ? 'line-through text-gray-500' : 'text-gray-900'}`}>
+          <p 
+            id={`title-${task.id}`}
+            className={`text-sm font-medium ${task.completed ? 'line-through text-gray-500' : 'text-gray-900'}`}
+          >
             {task.title}
           </p>
           <div className="mt-1 flex items-center space-x-2">
-            <span className={`text-xs px-2 py-0.5 rounded-full ${getPriorityColor(task.priority)}`}>
+            <span id={`priority-${task.id}`} className={`text-xs px-2 py-0.5 rounded-full ${getPriorityColor(task.priority)}`}>
               {task.priority?.toUpperCase()}
             </span>
-            <span className="text-xs bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-full">
+            <span id={`category-${task.id}`} className="text-xs bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-full">
               {task.category}
             </span>
             {task.dueDate && (
-              <span className="text-xs text-gray-500">
+              <span id={`dueDate-${task.id}`} className="text-xs text-gray-500">
                 Due: {task.dueDate}
               </span>
             )}
@@ -67,12 +69,14 @@ function TaskCard({ task, onEdit }) {
         </div>
         <div className="flex space-x-2">
           <button 
+            id={`edit-${task.id}`}
             className="text-gray-400 hover:text-indigo-600"
             onClick={() => onEdit(task)}
           >
             <Edit2 className="h-4 w-4" />
           </button>
           <button 
+            id={`delete-${task.id}`}
             className="text-gray-400 hover:text-red-600"
             onClick={handleDelete}
           >
