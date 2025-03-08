@@ -19,8 +19,9 @@ const App = () => {
     const statusMatch = 
       filter === 'all' ? true : 
       filter === 'completed' ? task.completed : 
-      !task.completed;
-      
+      filter === 'active' ? !task.completed : 
+      task.category === filter; // Category filter condition
+  
     // Apply search filter
     const searchLower = searchQuery.toLowerCase();
     const searchMatch = searchQuery === '' ? true : 
@@ -29,6 +30,7 @@ const App = () => {
       
     return statusMatch && searchMatch;
   });
+  
   
   const handleEditTask = (task) => {
     setEditingTask(task);
@@ -105,34 +107,45 @@ const App = () => {
           {showStats && <TaskStats />}
           
           {/* Task List */}
-          <div className="space-y-2">
-            {filteredTasks.length > 0 ? (
-              filteredTasks.map(task => (
-                <TaskCard 
-                  key={task.id}
-                  task={task}
-                  onEdit={handleEditTask}
-                />
-              ))
-            ) : (
-              <div className="text-center py-8">
-                <p className="text-gray-500">No tasks found</p>
-                {searchQuery && (
-                  <p className="text-sm text-gray-400 mt-1">
-                    Try adjusting your search or filters
-                  </p>
-                )}
-                {!searchQuery && !tasks.length && (
-                  <button
-                    className="mt-3 text-indigo-600 hover:text-indigo-800"
-                    onClick={() => setShowAddTask(true)}
-                  >
-                    Add your first task
-                  </button>
-                )}
-              </div>
-            )}
-          </div>
+<div className="space-y-2">
+  {filteredTasks.length > 0 ? (
+    filteredTasks.map(task => (
+      <TaskCard 
+        key={task.id}
+        task={task}
+        onEdit={handleEditTask}
+      />
+    ))
+  ) : (
+    <div className="text-center py-8">
+      <p className="text-gray-500">
+        {searchQuery 
+          ? filter === 'completed'
+            ? `No completed task matches "${searchQuery}"`
+            : filter === 'active'
+              ? `No active task matches "${searchQuery}"`
+              : filter !== 'all'
+                ? `No task found in the "${filter}" category`
+                : `No task found for "${searchQuery}"`
+          : filter === 'completed'
+            ? "No completed tasks available"
+            : filter === 'active'
+              ? "No active tasks available"
+              : "No tasks found"}
+      </p>
+      {!searchQuery && !tasks.length && (
+        <button
+          className="mt-3 text-indigo-600 hover:text-indigo-800"
+          onClick={() => setShowAddTask(true)}
+        >
+          Add your first task
+        </button>
+      )}
+    </div>
+  )}
+</div>
+
+
         </div>
       </div>
     </div>

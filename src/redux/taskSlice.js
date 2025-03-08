@@ -64,6 +64,10 @@ const tasksSlice = createSlice({
         
         toggleStats: (state) => {
             state.showStats = !state.showStats;
+        },
+
+        categoryFilter: (state, action)=>{
+            state.filter = action.payload;
         }
     }
 });
@@ -75,7 +79,8 @@ export const {
     toggleTaskStatus, 
     setFilter, 
     setSearchQuery,
-    toggleStats 
+    toggleStats,
+    categoryFilter 
 } = tasksSlice.actions;
 
 export default tasksSlice.reducer;

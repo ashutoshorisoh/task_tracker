@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilter, setSearchQuery } from '../redux/taskSlice';
+import { setFilter, setSearchQuery, categoryFilter } from '../redux/taskSlice';
 import { Calendar, Check, Star, Tag, Search, Filter } from 'lucide-react';
 
 const TaskFilters = () => {
@@ -16,7 +16,7 @@ const TaskFilters = () => {
   };
 
   const handleCategoryFilter = (category) => {
-    dispatch(setFilter(category)); // Setting the filter to the category name
+    dispatch(categoryFilter(category)); // Use categoryFilter action
   };
 
   const categoryCounts = tasks.reduce((acc, task) => {
