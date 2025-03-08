@@ -70,14 +70,14 @@ function TaskCard({ task, onEdit }) {
         <div className="flex space-x-2">
           <button 
             id={`edit-${task.id}`}
-            className="text-gray-400 hover:text-indigo-600"
+            className="text-gray-700 hover:text-indigo-600"
             onClick={() => onEdit(task)}
           >
             <Edit2 className="h-4 w-4" />
           </button>
           <button 
             id={`delete-${task.id}`}
-            className="text-gray-400 hover:text-red-600"
+            className="text-gray-700 hover:text-red-600"
             onClick={handleDelete}
           >
             <Trash2 className="h-4 w-4" />
