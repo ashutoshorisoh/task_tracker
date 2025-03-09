@@ -6,7 +6,7 @@ import { X, ChevronDown } from 'lucide-react';
 const TaskForm = ({ task = null, onClose }) => {
   const dispatch = useDispatch();
   const isEditing = !!task;
-  
+
   const [formData, setFormData] = useState({
     title: '',
     priority: 'MEDIUM',
@@ -30,27 +30,19 @@ const TaskForm = ({ task = null, onClose }) => {
     }
   }, [task]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const validateForm = () => {
+  const validateForm = (data = formData) => {
     let newErrors = {};
 
-    if (!formData.title.trim()) {
+    if (!data.title.trim()) {
       newErrors.title = 'Title cannot be empty.';
     }
 
-    if (!formData.category.trim()) {
+    if (!data.category.trim()) {
       newErrors.category = 'Category cannot be empty.';
     }
 
-    if (formData.dueDate) {
-      const selectedDate = new Date(formData.dueDate);
+    if (data.dueDate) {
+      const selectedDate = new Date(data.dueDate);
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       if (selectedDate < today) {
@@ -59,7 +51,19 @@ const TaskForm = ({ task = null, onClose }) => {
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData(prev => {
+      const updatedFormData = { ...prev, [name]: value };
+
+      // Validate form on every input change
+      validateForm(updatedFormData);
+
+      return updatedFormData;
+    });
   };
 
   const handleSubmit = (e) => {
