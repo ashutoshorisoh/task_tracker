@@ -59,7 +59,7 @@ const TaskForm = ({ task = null, onClose }) => {
     setFormData(prev => {
       const updatedFormData = { ...prev, [name]: value };
 
-      // Validate form on every input change
+      
       validateForm(updatedFormData);
 
       return updatedFormData;
@@ -68,9 +68,11 @@ const TaskForm = ({ task = null, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!validateForm()) return;
-
+  
+    validateForm(); 
+  
+    if (Object.keys(errors).length > 0) return; 
+  
     if (isEditing) {
       dispatch(editTask({
         id: task.id,
@@ -83,7 +85,7 @@ const TaskForm = ({ task = null, onClose }) => {
         createdAt: new Date().toISOString()
       }));
     }
-
+  
     setFormData({
       title: '',
       priority: 'MEDIUM',
@@ -91,9 +93,10 @@ const TaskForm = ({ task = null, onClose }) => {
       dueDate: '',
       completed: false
     });
-
+  
     if (onClose) onClose();
   };
+  
 
   return (
     <div className="bg-white p-4 rounded-lg shadow mb-4">
