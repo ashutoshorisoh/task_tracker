@@ -22,9 +22,15 @@ A React application for efficient task management with advanced features.
 - **Responsive Design** - Works on mobile and desktop
 - **Persistence** - Tasks saved to localStorage
 
+## Testing
+
+- **End-to-End Testing** - Done using the **pytest** framework.
+- **Testing Frameworks Repository** - https://github.com/ashutoshorisoh/task_tracker_test_framework
+
 ## How to Run
 
 ```
 npm install
 npm run dev
 ```
+
