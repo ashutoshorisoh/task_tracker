@@ -20,22 +20,7 @@ A React application for efficient task management with advanced features.
 - **Drag & Drop** - Reorder tasks with drag and drop
 - **Statistics** - View task completion metrics
 - **Responsive Design** - Works on mobile and desktop
-- **Dark/Light Mode** - Theme toggle
 - **Persistence** - Tasks saved to localStorage
-
-## Project Structure
-
-```
-src/
-├── assets/          # Static assets
-├── components/      # UI components
-├── redux/           # Redux store and slices
-│   ├── store.js     
-│   ├── taskSlice.js 
-│   └── toggleMode.js
-├── App.jsx          
-└── TaskPage.jsx     # Main task page
-```
 
 ## How to Run
 
