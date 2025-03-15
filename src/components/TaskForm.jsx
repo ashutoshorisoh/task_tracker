@@ -2,10 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { createTask, editTask } from '../redux/taskSlice';
 import { X, ChevronDown } from 'lucide-react';
+import { toggleMode } from '../redux/toggleMode';
+import { useSelector } from 'react-redux';
 
 const TaskForm = ({ task = null, onClose }) => {
   const dispatch = useDispatch();
   const isEditing = !!task;
+
+  const mode = useSelector(state=>state.mode.mode)
+
 
   const [formData, setFormData] = useState({
     title: '',
@@ -32,15 +37,15 @@ const TaskForm = ({ task = null, onClose }) => {
 
   const validateForm = (data = formData) => {
     let newErrors = {};
-
+  
     if (!data.title.trim()) {
       newErrors.title = 'Title cannot be empty.';
     }
-
+  
     if (!data.category.trim()) {
       newErrors.category = 'Category cannot be empty.';
     }
-
+  
     if (data.dueDate) {
       const selectedDate = new Date(data.dueDate);
       const today = new Date();
@@ -49,9 +54,11 @@ const TaskForm = ({ task = null, onClose }) => {
         newErrors.dueDate = 'Due date cannot be in the past.';
       }
     }
-
+  
     setErrors(newErrors);
+    return newErrors;  // ✅ Return errors so they can be used immediately
   };
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -69,9 +76,9 @@ const TaskForm = ({ task = null, onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
   
-    validateForm(); 
+    const validationErrors = validateForm();  // ✅ Use return value
   
-    if (Object.keys(errors).length > 0) return; 
+    if (Object.keys(validationErrors).length > 0) return;  // ✅ Stop if errors exist
   
     if (isEditing) {
       dispatch(editTask({
@@ -97,13 +104,14 @@ const TaskForm = ({ task = null, onClose }) => {
     if (onClose) onClose();
   };
   
+  
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow mb-4">
+    <div className={`p-4 rounded-lg shadow mb-4 ${mode==="light"? "bg-white text-black": "bg-black text-white"}`}>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold">{isEditing ? 'Edit Task' : 'Add New Task'}</h2>
         {onClose && (
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+          <button onClick={onClose} className="">
             <X className="h-5 w-5" />
           </button>
         )}
@@ -112,11 +120,11 @@ const TaskForm = ({ task = null, onClose }) => {
       <form onSubmit={handleSubmit}>
         {/* Task Title */}
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">Task Title</label>
+          <label className="block text-sm font-medium  mb-1">Task Title</label>
           <input
             name="title"
             type="text"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-3 py-2 border text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             placeholder="Enter task title"
             value={formData.title}
             onChange={handleChange}
@@ -127,9 +135,9 @@ const TaskForm = ({ task = null, onClose }) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
           {/* Priority Dropdown */}
           <div className="relative">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Priority</label>
+            <label className="block text-sm font-medium text-gray-100 mb-1">Priority</label>
             <div 
-              className="relative w-full px-3 py-2 border border-gray-300 rounded-md bg-white cursor-pointer flex justify-between items-center"
+              className="relative w-full px-3  text-black py-2 border border-gray-300 rounded-md bg-white cursor-pointer flex justify-between items-center"
               onClick={() => setDropdownOpen(!isDropdownOpen)}
             >
               {formData.priority}
@@ -156,11 +164,11 @@ const TaskForm = ({ task = null, onClose }) => {
 
           {/* Category Input */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+            <label className="block text-sm font-medium text-gray-100 mb-1">Category</label>
             <input
               name="category"
               type="text"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               placeholder="e.g. Work, Personal"
               value={formData.category}
               onChange={handleChange}
@@ -170,11 +178,11 @@ const TaskForm = ({ task = null, onClose }) => {
 
           {/* Due Date Input */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Due Date</label>
+            <label className="block text-sm font-medium  text-gray-100 mb-1">Due Date</label>
             <input
               name="dueDate"
               type="date"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               value={formData.dueDate}
               onChange={handleChange}
             />
