@@ -20,22 +20,12 @@ A React application for efficient task management with advanced features.
 - **Drag & Drop** - Reorder tasks with drag and drop
 - **Statistics** - View task completion metrics
 - **Responsive Design** - Works on mobile and desktop
-- **Dark/Light Mode** - Theme toggle
 - **Persistence** - Tasks saved to localStorage
 
-## Project Structure
+## Testing
 
-```
-src/
-├── assets/          # Static assets
-├── components/      # UI components
-├── redux/           # Redux store and slices
-│   ├── store.js     
-│   ├── taskSlice.js 
-│   └── toggleMode.js
-├── App.jsx          
-└── TaskPage.jsx     # Main task page
-```
+- **End-to-End Testing** - Done using the **pytest** framework.
+- **Testing Frameworks Repository** - https://github.com/ashutoshorisoh/task_tracker_test_framework
 
 ## How to Run
 
@@ -43,3 +33,4 @@ src/
 npm install
 npm run dev
 ```
+
