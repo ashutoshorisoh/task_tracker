@@ -1,8 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { toggleMode } from '../redux/toggleMode';
 
 const TaskStats = () => {
   const { tasks } = useSelector(state => state.tasks);
+
+    const mode = useSelector(state=>state.mode.mode)
+  
   
   // Calculate completed task percentage
   const completedPercentage = tasks.length > 0 
@@ -22,7 +26,10 @@ const TaskStats = () => {
 
     
   return (
-    <div className="bg-slate-100 p-6 rounded-lg shadow-md mb-4" id="task-stats">
+    <div 
+    className={`${mode==="light"?"bg-slate-100":"bg-black"} p-6 rounded-lg shadow-md text-black mb-4`} 
+    id="task-stats"
+    >
       <h2 className="text-lg font-semibold mb-4">Task Completion Statistics</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-indigo-200 p-4 rounded-md" id="tasks-completed">

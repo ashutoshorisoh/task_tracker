@@ -8,6 +8,8 @@ import TaskFilters from './components/TaskFilters';
 import TaskStats from './components/TaskStats';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { toggleMode } from './redux/toggleMode';
+import { ToggleRight } from 'lucide-react';
+import { ToggleLeft } from 'lucide-react';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -65,7 +67,9 @@ const App = () => {
           </button>
 
           <button onClick={()=>dispatch(toggleMode())}>
-            togg
+            
+          {mode === "light" ? <ToggleLeft /> : <ToggleRight />}
+            
           </button>
 
           </div>
