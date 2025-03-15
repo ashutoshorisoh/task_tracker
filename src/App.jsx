@@ -7,12 +7,16 @@ import TaskForm from './components/TaskForm';
 import TaskFilters from './components/TaskFilters';
 import TaskStats from './components/TaskStats';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import { toggleMode } from './redux/toggleMode';
 
 const App = () => {
   const dispatch = useDispatch();
   const { tasks, filter, searchQuery, showStats } = useSelector(state => state.tasks);
   const [showAddTask, setShowAddTask] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
+
+  const mode = useSelector(state=>state.mode.mode)
+  const[modeLoad, setNewModeLoad]=useState(mode)
 
   const filteredTasks = tasks.filter(task => {
     const statusMatch =
@@ -45,39 +49,50 @@ const App = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
+    <div className={`flex flex-col h-screen ${mode==='light'? "bg-black": "bg-white"}`}>
       <header className="bg-indigo-600 text-white p-4 shadow-md">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <Clock className="h-6 w-6" />
             <h1 className="text-xl font-bold">Task Tracker</h1>
           </div>
+
+          <div className='flex gap-2'>
+
           <button onClick={() => dispatch(toggleStats())} className="flex items-center space-x-2">
             <p>View Stats</p>
             <BarChart2 className="h-5 w-5" />
           </button>
+
+          <button onClick={()=>dispatch(toggleMode())}>
+            togg
+          </button>
+
+          </div>
+          
+          
         </div>
       </header>
 
-      <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
-        <div className="w-full md:w-64 bg-white p-4 border-r border-gray-200">
+      <div className={`flex-1 flex flex-col md:flex-row overflow-hidden ${mode==="light"? "bg-white text-black" : "bg-black text-white"}`}>
+        <div className="w-full md:w-64 p-4 border-r border-gray-200">
           <button 
-            className="w-full mb-2 bg-indigo-600 text-white p-2 rounded-md flex items-center justify-center space-x-2 hover:bg-indigo-700"
+            className="w-full mb-2 bg-indigo-600  p-2 rounded-md flex items-center justify-center space-x-2 hover:bg-indigo-700"
             onClick={() => {
               setEditingTask(null);
               setShowAddTask(true);
             }}
           >
-            <Plus className="h-4 w-4" />
-            <span>Add New Task</span>
+            <Plus className="h-4 w-4 text-white" />
+            <span className='text-white'>Add New Task</span>
           </button>
           <div className="lg:block hidden">
             <TaskFilters />
           </div>
         </div>
 
-        <div className="flex-1 overflow-auto p-4">
-          <div className="lg:hidden block">
+        <div className={`flex-1 overflow-auto p-4 `}>
+        <div className="lg:hidden block">
             <TaskFilters />
           </div>
 
