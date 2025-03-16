@@ -66,7 +66,11 @@ const App = () => {
             <BarChart2 className="h-5 w-5" />
           </button>
 
-          <button onClick={()=>dispatch(toggleMode())}>
+          <button 
+          onClick={()=>dispatch(toggleMode())}
+          className={`${mode==="light"? "text-white": "text-black"}`}
+            
+          >
             
           {mode === "light" ? <ToggleLeft /> : <ToggleRight />}
             
