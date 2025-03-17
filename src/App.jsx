@@ -52,7 +52,7 @@ const App = () => {
 
   return (
     <div className={`flex flex-col h-screen ${mode==='light'? "bg-black": "bg-white"}`}>
-      <header className="bg-indigo-600 text-white p-4 shadow-md">
+      <header className={`${mode==="light"? "bg-indigo-600 text-white": "bg-black text-indigo-400"} p-4 shadow-md`}>
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <Clock className="h-6 w-6" />
@@ -68,7 +68,7 @@ const App = () => {
 
           <button 
           onClick={()=>dispatch(toggleMode())}
-          className={`${mode==="light"? "text-white": "text-black"}`}
+          className={`${mode==="light"? "text-white": "text-indigo-400"}`}
             
           >
             
@@ -85,14 +85,14 @@ const App = () => {
       <div className={`flex-1 flex flex-col md:flex-row overflow-hidden ${mode==="light"? "bg-white text-black" : "bg-black text-white"}`}>
         <div className="w-full md:w-64 p-4 border-r border-gray-200">
           <button 
-            className="w-full mb-2 bg-indigo-600  p-2 rounded-md flex items-center justify-center space-x-2 hover:bg-indigo-700"
+            className={`w-full mb-2 ${mode==="light"? "bg-indigo-600 text-white hover:bg-indigo-700": "bg-slate-200 shadow-sm shadow-gray-300 text-indigo-600 hover:bg-indigo-600 hover:text-white"}  p-2 rounded-md flex items-center justify-center space-x-2 `}
             onClick={() => {
               setEditingTask(null);
               setShowAddTask(true);
             }}
           >
-            <Plus className="h-4 w-4 text-white" />
-            <span className='text-white'>Add New Task</span>
+            <Plus className="h-4 w-4 " />
+            <span className=''>Add New Task</span>
           </button>
           <div className="lg:block hidden">
             <TaskFilters />
