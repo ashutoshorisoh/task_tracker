@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilter, setSearchQuery, categoryFilter } from "../redux/taskSlice";
 import { Calendar, Check, Star, Tag, Search, Filter } from "lucide-react";
+import { toggleMode } from "../redux/toggleMode";
 
 const TaskFilters = () => {
   const dispatch = useDispatch();
@@ -10,6 +11,10 @@ const TaskFilters = () => {
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  const mode = useSelector(state=>state.mode.mode) 
+
+
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -53,7 +58,8 @@ const TaskFilters = () => {
         <input
           type="text"
           placeholder="Search tasks..."
-          className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-gray-300"
+          className={`w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:text-gray-300
+            ${mode==="light"? "bg-white text-black": "bg-black text-white"}`}
           value={searchQuery}
           onChange={handleSearchChange}
         />
